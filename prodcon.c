@@ -73,14 +73,33 @@ int main(int argc, char *argv[]) {
 		sem_init(&full[i], 0, 0);
 	}
 
+	// Create producer threads
 	producerThreads = malloc(producerCount * sizeof(pthread_t));
 	for (i = 0; i < producerCount; i++) {
 		pthread_create(&producerThreads[i], NULL, (void*)&producer, buffer);	
 	}
 
+	// Create consumer threads
 	consumerThreads = malloc(consumerCount * sizeof(pthread_t));
 	for (i = 0; i < consumerCount; i++) {
 		pthread_create(&consumerThreads[i], NULL, (void*)&consumer, buffer);
+	}
+
+	// Join producer threads
+	for (i = 0; i < producerCount; i++) {
+		pthread_join(producerThreads[i], NULL);
+	}
+
+	// Join consumer threads
+	for (i = 0; i < consumerCount; i++) {
+		pthread_join(consumerThreads[i], NULL);
+	}
+
+	// Destroy semaphores
+	for (i = 0; i < bufferCount; i++) {
+		sem_destroy(&mutex[i]);
+		sem_destroy(&empty[i]);
+		sem_destroy(&full[i]);
 	}
 
 	free(producerThreads);
