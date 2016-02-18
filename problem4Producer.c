@@ -32,12 +32,9 @@ int main(int argc, char const *argv[])
 		if(i%1000==0)
 			printf("%d items produced.\n", i);
 
-		//Writing to stream (Realize it is sent immediately)
+		//Write to stream and send it down pipe
    	  	fprintf(stream, "f");
  	  	fflush (stream);
-      
-     	//Wait a bit to prevent blocking before  writing out more on pipe
-      	//sleep(1);
       	i++;
     }
     printf("%d items produced.\n", i);

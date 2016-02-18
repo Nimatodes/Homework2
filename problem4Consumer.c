@@ -29,7 +29,7 @@ int main(int argc, char const *argv[])
     char buffer;
  	int i=0;
   	while(i<items){
-    	buffer = getc(stream);
+    	buffer = getc(stream);//read char from pipe
     	if(buffer!='f'){
     		printf("Consumer error at index: %d\n", i);
 			exit(1);
