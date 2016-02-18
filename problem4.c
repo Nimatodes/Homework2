@@ -4,11 +4,6 @@
 #include <unistd.h>
 
 
-#include <sys/types.h>
-#include <sys/shm.h>
-#include <sys/stat.h>
-
-
 int spawn(char *program, char **arg_list){
   pid_t child_pid;//16 bit value ID --> typecast to int(32 bits)
 
@@ -21,34 +16,6 @@ int spawn(char *program, char **arg_list){
     fprintf(stderr, "An error occured in execvp\n");
     abort();
   }
-}
-
-void producer(const char* message, int count, FILE* stream)
-{
-  printf("\nIn writer\n");
-  for(; count > 0; --count)
-    {
-       //Writing to stream (Realize it is sent immediately)
-      fprintf(stream, "From writer: %s", message);
-      fflush (stream);
-      
-      //Wait a bit to prevent blocking before  writing out more on pipe
-      //sleep(1);
-    }
-    printf("\nExiting writer\n");
-}
-
-void consumer(FILE* stream)
-{
-  char buffer[1024];
-  printf("In reader\n");
-   //Read until you hit end of STREAM!fgets reads until either newline or end-of-file
-  while(!feof(stream) && !ferror(stream) && fgets(buffer, sizeof(buffer), stream) != NULL){
-     //Constantly consumes from buffer reguardless of if empty or not
-    fputs(buffer, stdout);
-    //printf("In reader in while loop");
-  }
-  printf("\nExiting reader\n");
 }
 
 int main()
