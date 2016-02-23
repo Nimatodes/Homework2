@@ -21,7 +21,7 @@ int main(int argc, char const *argv[]){
 	int sd = socket (AF_INET,SOCK_STREAM,0);
 	name.sin_family = AF_INET;
 	name.sin_addr.s_addr = htonl(INADDR_ANY);
-	name.sin_port = htons(1234);
+	name.sin_port = htons(8192);
 
 	bind(sd, (struct sockaddr *)&name, sizeof(name));
 	listen(sd,1);

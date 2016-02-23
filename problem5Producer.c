@@ -23,7 +23,7 @@ int main(int argc, char const *argv[]){
 	server.sin_family = AF_INET;
 	hp = gethostbyname("localhost");
 	bcopy ( hp->h_addr, &(server.sin_addr.s_addr), hp->h_length);
-	server.sin_port = htons(1234);
+	server.sin_port = htons(8192);
 
 	connect(sd, (struct sockaddr *)&server, sizeof(server));
 	int count = 0;
